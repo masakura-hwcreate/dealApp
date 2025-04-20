@@ -20,7 +20,7 @@ class DealsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $deals = Deal::select('user_id', 'cliant_name', 'products', 'payment_method', 'confidence', 'sales_amount', 'cost_amount', 'estimated_month',)
             ->where('user_id', Auth::id())
@@ -33,9 +33,9 @@ class DealsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('deals.create');
     }
 
     /**
