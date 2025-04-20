@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('deals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('cliant_name');
+            $table->string('products');
+            $table->string('payment_method');
+            $table->string('confidence');
+            $table->integer('sales_amount');
+            $table->integer('cost_amount');
+            $table->date('estimated_month');
             $table->timestamps();
         });
     }
