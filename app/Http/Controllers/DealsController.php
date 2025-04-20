@@ -27,7 +27,7 @@ class DealsController extends Controller
             ->orderBy('estimated_month', 'asc')
             ->get();
 
-            dd($deals);
+            return view('deals.index', compact('deals'));
     }
 
     /**
