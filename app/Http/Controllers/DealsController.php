@@ -22,7 +22,7 @@ class DealsController extends Controller
      */
     public function index(): View
     {
-        $deals = Deal::select('user_id', 'cliant_name', 'products', 'payment_method', 'confidence', 'sales_amount', 'cost_amount', 'estimated_month',)
+        $deals = Deal::select('id', 'user_id', 'cliant_name', 'products', 'payment_method', 'confidence', 'sales_amount', 'cost_amount', 'estimated_month',)
             ->where('user_id', Auth::id())
             ->orderBy('estimated_month', 'asc')
             ->get();
