@@ -27,7 +27,11 @@ class DealsController extends Controller
             ->orderBy('estimated_month', 'asc')
             ->get();
 
-            return view('deals.index', compact('deals'));
+            $totalSales = $deals->sum('sales_amount');
+            $totalCost = $deals->sum('cost_amount');
+            $totalProfit = $totalSales - $totalCost;
+
+            return view('deals.index', compact('deals', 'totalSales', 'totalCost', 'totalProfit'));
     }
 
     /**
@@ -43,7 +47,29 @@ class DealsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'cliant_name' => ['required', 'string', 'max:25'],
+            'products' => ['required', 'string', 'max:25'],
+            'confidence' => ['required', 'string', 'max:3'],
+            'payment_method' => ['required', 'string', 'max:10'],
+            'sales_amount' => ['required', 'integer', 'digits_between:1,10'],
+            'cost_amount' => ['required', 'integer', 'digits_between:1,10'],
+            'estimated_month' => ['required', 'date', 'max:20'],
+        ]);
+
+        Deal::create([
+            'user_id' => Auth::id(),
+            'cliant_name' => $request->cliant_name,
+            'products' => $request->products,
+            'confidence' => $request->confidence,
+            'payment_method' => $request->payment_method,
+            'sales_amount' => $request->sales_amount,
+            'cost_amount' => $request->cost_amount,
+            'estimated_month' => $request->estimated_month,
+        ]);
+
+        return redirect()->route('deals.index');
     }
 
     /**

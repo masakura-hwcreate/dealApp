@@ -15,21 +15,30 @@
                             <th>商材</th>
                             <th>支払方法</th>
                             <th>案件確度</th>
-                            <th>売上金額</th>
-                            <th>仕入金額</th>
+                            <th>売上</th>
+                            <th>仕入</th>
+                            <th>利益</th>
                             <th>売上見込月</th>
                         </tr>
                         @foreach ($deals as $deal)
                         <tr>
-                            <td>{{$deal->cliant_name}}</td>
-                            <td>{{$deal->products}}</td>
-                            <td>{{$deal->payment_method}}</td>
-                            <td>{{$deal->confidence}}</td>
-                            <td>{{$deal->sales_amount}}</td>
-                            <td>{{$deal->cost_amount}}</td>
-                            <td>{{$deal->estimated_month}}</td>
+                            <td>{{ $deal->cliant_name }}</td>
+                            <td>{{ $deal->products }}</td>
+                            <td>{{ $deal->payment_method }}</td>
+                            <td>{{ $deal->confidence }}</td>
+                            <td>{{ number_format($deal->sales_amount) }}</td>
+                            <td>{{ number_format($deal->cost_amount) }}</td>
+                            <td>{{ number_format($deal->sales_amount - $deal->cost_amount) }}</td>
+                            <td>{{ $deal->estimated_month }}</td>
                         </tr>
                         @endforeach
+                        <tr style="font-weight: bold; background-color: #f3f4f6;">
+                            <td colspan="4" style="text-align: right;">合計</td>
+                            <td>{{ number_format($totalSales) }}</td>
+                            <td>{{ number_format($totalCost) }}</td>
+                            <td>{{ number_format($totalProfit) }}</td>
+                            <td></td>
+                        </tr>
                     </table>
                 </div>
                     <button onclick="location.href='{{ route('deals.create') }}'" type="submit" class="flex mx-auto mb-12 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">案件追加</button>
